@@ -1,6 +1,6 @@
 class BooksController < ApplicationController
 
-	before_action :baria_user, only: [:edit, :update]
+	before_action :ensure_correct_book, only: [:edit, :update]
 
   def show
 	  @book = Book.find(params[:id])
@@ -9,18 +9,18 @@ class BooksController < ApplicationController
   end
 
   def index
-	@book = Book.new
+	  @book = Book.new
   	@books = Book.all
   end
 
   def create
+    @books = Book.all
 	  @book = Book.new(book_params)
 	  @book.user_id = current_user.id
   	if @book.save
   		redirect_to @book, notice: "successfully created book!"
   	else
-  		@books = Book.all
-  		render 'index'
+  		render :index
   	end
   end
 
@@ -33,7 +33,7 @@ class BooksController < ApplicationController
   	if @book.update(book_params)
   		redirect_to @book, notice: "successfully updated book!"
   	else
-  		render "edit"
+  		render :edit
   	end
   end
 
@@ -49,10 +49,11 @@ class BooksController < ApplicationController
   	params.require(:book).permit(:title, :body)
   end
 
-  def baria_user
-	unless Book.find(params[:id]).user.id.to_i == current_user.id
-		redirect_to books_path
-	end
- end
+  def ensure_correct_book
+    @book = Book.find(params[:id])
+    if current_user.id != @book.user_id
+      redirect_to books_path
+    end
+  end
 
 end

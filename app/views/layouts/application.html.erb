@@ -1,13 +1,7 @@
-<% if flash[:notice] %>
-  <div class="text-success">
-    <%= flash[:notice] %>
-  </div>
-<% end %>
-
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Bookers2</title>
+    <title>Bookers</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -33,19 +27,33 @@
               <% else %>
                 <li><%= link_to  "  Home", root_path, class: "home glyphicon glyphicon-home" %></li>
                 <li><%= link_to  "  About", home_about_path, class: "about glyphicon glyphicon-link" %></li>
-                <li><%= link_to "  Sign Up", new_user_registration_path, class: "sign_up glyphicon glyphicon-edit" %></li>
+                <li><%= link_to "  sign Up", new_user_registration_path, class: "sign_up glyphicon glyphicon-edit" %></li>
                 <li><%= link_to "  login", new_user_session_path, class: "sign_in glyphicon glyphicon-log-in" %></li>
               <% end %>
           </ul>
         </nav>
-
       </div>
     </header>
 
-    <main>
+    <div class="body">
+     <div class="container">
+      <p id="notice"><%= notice %></p>
+      <p class="alert"><%= alert %></p>
+
+      <%= yield %>
+
+     </div>
+    </div>
+
+    <footer>
       <div class="container">
-        <%= yield %>
+       <div class="row">
+        <div class="col-xs-3 col-xs-offset-9">
+         <p>CopyRight Infratop.inc</p>
+        </div>
+       </div>
       </div>
-    </main>
+    </footer>
+
   </body>
 </html>

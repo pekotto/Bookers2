@@ -25,10 +25,17 @@ header .navbar-left span {
 	padding-top: 10px;
 }
 
-body {
-	margin-top: 40px;
-}
 
 .actions {
 	margin-top:10px;
+}
+
+.notice {
+  background-color: green;
+  color: red;
+  text-align: center;
+}
+
+a:visited {
+  color: #666;
 }
